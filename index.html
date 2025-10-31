@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROBOOK AI Preview - Completed</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         /* --- General Styling --- */
         body {
@@ -16,7 +17,7 @@
             align-items: center;
         }
 
-        /* --- Navigation Bar --- */
+        /* --- Navigation Bar (Important for PDF hiding) --- */
         .navigation {
             background-color: #ffffff;
             border: 1px solid #ddd;
@@ -29,6 +30,13 @@
             align-items: center;
             justify-content: space-between;
             width: 800px; /* Match preview container width */
+            /* This class will be added/removed for PDF generation */
+            visibility: visible; 
+        }
+        
+        /* Class used to hide navigation during PDF creation */
+        .hide-for-print {
+            display: none !important;
         }
 
         .navigation button {
@@ -63,7 +71,7 @@
             min-height: 1000px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             background-color: #fff;
-            padding: 20px; /* Padding for the container itself */
+            padding: 20px;
         }
 
         /* --- Page Styling (Ethereal Template) --- */
@@ -79,16 +87,34 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s;
-            overflow-y: auto; /* Enable scrolling for long pages */
+            overflow-y: hidden; /* Prevent scrollbars in the preview */
+        }
+        
+        /* Make sure all pages are visible to html2pdf, but hide non-active content */
+        /* For PDF generation, we must make all pages visible but keep them stacked */
+        .page.pdf-ready {
+            position: relative; 
+            opacity: 1;
+            visibility: visible;
+            min-height: 1000px; /* Ensure a minimum size for the page break logic */
+            overflow-y: hidden;
+            /* Ensure page break class works */
+            page-break-after: always;
         }
 
         .page.active {
             opacity: 1;
             visibility: visible;
-            position: relative; /* Bring the active page into the flow */
+            position: relative;
             z-index: 10;
+            /* Override pdf-ready settings for regular view */
+            page-break-after: auto; 
         }
-
+        
+        .page:last-child.pdf-ready {
+            page-break-after: avoid; /* No break after the last page */
+        }
+        
         /* Content within a page */
         .content-page {
             max-width: 600px;
@@ -114,13 +140,222 @@
             justify-content: center;
             align-items: center;
         }
+        
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
 
-        .cover-page h1 {
-            font-size: 3em;
-            color: #2c3e50;
-            margin-bottom: 15px;
+    <div class="navigation" id="mainNavigation">
+        <button id="prevBtn" onclick="previousPage()">← Previous</button>
+        <div class="page-info">
+            Page <span id="currentPage">1</span> of <span id="totalPages">8</span>
+        </div>
+        <button id="nextBtn" onclick="nextPage()">Next →</button>
+        <button onclick="addNewPage()" style="background-color: #3498db;">+ Add Custom Page</button>
+        <button onclick="downloadPDF()" style="background-color: #e74c3c;">Download PDF</button>
+    </div>
+
+    <div id="previewContainer">
+
+        <div class="page cover-page active" data-page="0">
+            <h1>The PROBOOK AI Guide</h1>
+            <div class="subtitle">Publish-Ready Ebooks in One Click</div>
+                        <div class="author">By A. N. Author</div>
+        </div>
+
+        <div class="page" data-page="1">
+            <div class="content-page">
+                <h2>Table of Contents</h2>
+                <ol>
+                    <li>Introduction . . . . . . . . . . . . . . . . . . . . . . . . . 3</li>
+                    <li>Getting Started . . . . . . . . . . . . . . . . . . . . . . . . 4</li>
+                    <li>Template Deep Dive . . . . . . . . . . . . . . . . . . . . . 5</li>
+                    <li>Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . 6</li>
+                    <li>Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</li>
+                    <li>Resources . . . . . . . . . . . . . . . . . . . . . . . . . . 8</li>
+                </ol>
+            </div>
+            <div class="page-number">i</div> </div>
+
+        <div class="page" data-page="2">
+            <div class="content-page">
+                <h2>Introduction</h2>
+                <p>Welcome to the era of instant publishing! PROBOOK AI leverages semantic analysis and category bias to intelligently place images and structure your draft. This is where your raw manuscript takes its first breath as a beautiful, print-ready ebook.</p>
+                <p>No more tedious formatting. Just upload your .docx or .txt file, select a template (like this Ethereal one), and watch the magic happen. The system handles all the required front and back matter automatically.</p>
+            </div>
+            <div class="page-number">3</div>
+        </div>
+
+        <div class="page" data-page="3">
+            <div class="content-page">
+                <h2>Getting Started</h2>
+                <p>Getting your book ready is a simple 5-step process:</p>
+                <ol>
+                    <li>**Upload:** Your manuscript (.docx or .txt)</li>
+                    <li>**Customize:** Add images (optional) and set the book category.</li>
+                    <li>**Template:** Choose one of the 7 premium templates.</li>
+                    <li>**Preview:** Click 'Update Preview' to see the result.</li>
+                    <li>**Export:** Hit 'Export to PDF' for a print-ready file.</li>
+                </ol>
+                <p>The AI handles everything from optimal line spacing to intelligent hyphenation, ensuring a professional look that rivals traditionally published books.</p>
+            </div>
+            <div class="page-number">4</div>
+        </div>
+
+        <div class="page" data-page="4">
+            <div class="content-page">
+                <h2>Template Deep Dive</h2>
+                <p>The **Ethereal** template you see here is designed for light, airy non-fiction and poetry. It uses a soft color palette and classic serif fonts for a sophisticated feel.</p>
+                <p>Other templates include **Organic** (for cookbooks and nature guides), **Architectural** (for technical manuals), and **Pro** (a clean, modern look for business books). Each template applies specific rules for image size, caption placement, and header/footer design.</p>
+            </div>
+            <div class="page-number">5</div>
+        </div>
+
+        <div class="page" data-page="5">
+            <div class="content-page">
+                <h2>Conclusion</h2>
+                <p>You have taken the final step in turning your draft into a polished product. PROBOOK AI is designed to save you countless hours of manual formatting, allowing you to focus on what you do best: **writing**.</p>
+                <p>With features like **TF-IDF Smart Image Placement** and **Auto Front/Back Matter**, you're equipped to publish professional-quality work instantly. We hope you enjoy the simplicity and power of automated design.</p>
+                <h3>What's Next?</h3>
+                <p>Review the final PDF and hit the market! We encourage you to explore the other features, including the built-in marketing tools for social media banners and email templates.</p>
+                <div class="page-number">6</div>
+            </div> </div> <div class="page" data-page="6">
+            <div class="content-page">
+                <h2>Appendix: PROBOOK AI Tech Stack</h2>
+                <p>The magic behind the system is built with:</p>
+                <ul>
+                    <li>**HTML + CSS + JS** (Single File Output)</li>
+                    <li>**Mammoth.js:** Used to convert .docx to HTML.</li>
+                    <li>**Html2pdf.js + PUG:** For robust PDF export.</li>
+                    <li>**TF-IDF:** Smart image placement and semantic analysis.</li>
+                </ul>
+                <p>This allows for a lightweight, fast, and highly portable solution.</p>
+                <div class="page-number">7</div>
+            </div>
+        </div>
+
+        <div class="page" data-page="7">
+            <div class="content-page">
+                <h2>Resources & Acknowledgments</h2>
+                <p>Thank you for using PROBOOK AI. Check out the following resources for support and community:</p>
+                <p>**GitHub Repo:** `github.com/allyd69/PROBOOK-AI`</p>
+                <p>**Live Demo:** `allyd69.github.io/PROBOOK-AI`</p>
+                <p>Special thanks to the open-source community for providing the underlying tools that make this possible.</p>
+                <div class="page-number">8</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        let currentPageIndex = 0;
+        let totalPagesCount = 0; 
+        const currentTemplate = 'ethereal';
+
+        function showPage(index) {
+            const pages = document.querySelectorAll('#previewContainer > .page');
+            totalPagesCount = pages.length;
+
+            pages.forEach(p => p.classList.remove('active'));
+
+            if (index >= 0 && index < totalPagesCount) {
+                pages[index].classList.add('active');
+                currentPageIndex = index;
+
+                document.getElementById('currentPage').textContent = index + 1;
+                document.getElementById('totalPages').textContent = totalPagesCount;
+            } else if (index < 0) {
+                showPage(0);
+                return;
+            } else if (index >= totalPagesCount) {
+                showPage(totalPagesCount - 1);
+                return;
+            }
+
+            document.getElementById('prevBtn').disabled = (currentPageIndex === 0);
+            document.getElementById('nextBtn').disabled = (currentPageIndex === totalPagesCount - 1);
         }
 
+        function nextPage() {
+            showPage(currentPageIndex + 1);
+        }
+
+        function previousPage() {
+            showPage(currentPageIndex - 1);
+        }
+
+        function addNewPage() {
+            const container = document.getElementById('previewContainer');
+            const newIndex = container.children.length; 
+            const newPage = document.createElement('div');
+            
+            newPage.className = `page template-${currentTemplate}`; 
+            newPage.dataset.page = newIndex;
+            
+            newPage.innerHTML = `
+                <div class="content-page">
+                    <h2>Custom Page ${newIndex - 1}</h2>
+                    <p contenteditable="true">Start typing your content here... This text is **editable** in the preview.</p>
+                    <p contenteditable="true">You can add images, tables, or anything else you need. This custom page is now page number **${newIndex + 1}**.</p>
+                    <div class="page-number">${newIndex + 1}</div>
+                </div>
+            `;
+            
+            container.appendChild(newPage);
+            totalPagesCount = container.children.length; 
+            showPage(newIndex); 
+        }
+
+        // 2. Download PDF Function
+        async function downloadPDF() {
+            const element = document.getElementById('previewContainer');
+            const navigation = document.getElementById('mainNavigation');
+            const pages = document.querySelectorAll('#previewContainer > .page');
+
+            // 4. Temporary Cleanup: HIDE the navigation bar
+            navigation.classList.add('hide-for-print');
+
+            // Prepare all pages for PDF generation
+            pages.forEach(p => p.classList.add('pdf-ready'));
+            
+            // Set options for the PDF
+            const options = {
+                margin: [0, 0, 0, 0], // Minimal margins
+                filename: 'PROBOOK_AI_Ebook_Final.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate and save the PDF
+            await html2pdf().set(options).from(element).save();
+
+            // Restore the view after PDF generation
+            pages.forEach(p => p.classList.remove('pdf-ready'));
+            navigation.classList.remove('hide-for-print');
+            // Ensure only the current page is visible after restore
+            showPage(currentPageIndex); 
+        }
+
+        // Initialize the first page and count total pages on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage(0);
+        });
+
+    </script>
+
+</body>
+</html>
         .cover-page .subtitle {
             font-size: 1.5em;
             color: #7f8c8d;
