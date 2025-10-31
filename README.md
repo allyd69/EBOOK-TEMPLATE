@@ -19,7 +19,7 @@
 ---
 
 ## 🚀 Live Demo
-👉 [**Try ProBook AI Now**](https://allyd69.github.io/PROBOOK-AI/ebook.html)
+👉 [**Try ProBook AI Now**](https://allyd69.github.io/PROBOOK-AI/)
 
 ---
 
