@@ -3,335 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProBook AI – Publish-Ready in One Click</title>
+    <title>PROBOOK AI Preview - Completed</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-        
-        :root {
-            --color-primary: #8b4789;
-            --color-secondary: #d4a373;
-            --color-accent: #2f5d62;
-            --color-highlight: #c1666b;
-            --color-dark: #1f2421;
-            --color-light: #fef9ef;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- General Styling --- */
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #1f2421 0%, #2f3e46 100%);
-            min-height: 100vh;
-            padding: 30px 20px;
-        }
-
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .app-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .app-header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.25));
-            z-index: 1;
-        }
-
-        .app-header h1,
-        .app-header .subtitle {
-            position: relative;
-            z-index: 2;
-        }
-
-        .app-header h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 48px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .app-header .subtitle {
-            color: var(--color-light);
-            opacity: 0.8;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .control-panel {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .control-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
+            font-family: 'Georgia', serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
         }
 
-        .input-group label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--color-dark);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .input-group input,
-        .input-group select,
-        .input-group textarea {
-            padding: 14px 18px;
-            border: 2px solid #e0e0e0;
+        /* --- Navigation Bar --- */
+        .navigation {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            margin-bottom: 20px;
             border-radius: 8px;
-            font-size: 15px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .input-group input:focus,
-        .input-group select:focus,
-        .input-group textarea:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(139, 71, 137, 0.1);
-        }
-
-        .input-group textarea {
-            resize: vertical;
-            min-height: 100px;
-            font-size: 14px;
-        }
-
-        .template-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .template-card {
-            padding: 20px;
-            border: 3px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            background: white;
-        }
-
-        .template-card:hover {
-            border-color: var(--color-primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(139, 71, 137, 0.2);
-        }
-
-        .template-card.active {
-            border-color: var(--color-primary);
-            background: linear-gradient(135deg, rgba(139, 71, 137, 0.1) 0%, rgba(212, 163, 115, 0.1) 100%);
-        }
-
-        .template-card h3 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--color-dark);
-        }
-
-        .template-card p {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .button-group {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             gap: 15px;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            width: 800px; /* Match preview container width */
         }
 
-        .btn {
-            padding: 16px 32px;
+        .navigation button {
+            padding: 8px 15px;
             border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-highlight) 100%);
+            background-color: #4CAF50;
             color: white;
-            box-shadow: 0 4px 20px rgba(139, 71, 137, 0.3);
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 71, 137, 0.4);
+        .navigation button:hover:not(:disabled) {
+            background-color: #45a049;
         }
 
-        .btn-secondary {
-            background: var(--color-accent);
-            color: white;
-            box-shadow: 0 4px 20px rgba(47, 93, 98, 0.3);
+        .navigation button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
-        .btn-secondary:hover {
-            background: #254851;
-            transform: translateY(-2px);
+        .page-info {
+            font-size: 1.1em;
+            color: #333;
         }
 
-        .btn-add {
-            background: var(--color-secondary);
-            color: white;
-            box-shadow: 0 4px 20px rgba(212, 163, 115, 0.3);
-        }
-
-        .btn-add:hover {
-            background: #c19563;
-            transform: translateY(-2px);
-        }
-
-        .preview-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .page {
-            width: 600px;
-            height: 750px;
-            background: white;
-            box-shadow: 0 15px 60px rgba(0,0,0,0.4);
+        /* --- Preview Container --- */
+        #previewContainer {
             position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            page-break-after: always;
+            width: 800px;
+            min-height: 1000px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background-color: #fff;
+            padding: 20px; /* Padding for the container itself */
         }
 
-        .upload-zone {
-            border: 2px dashed #e0e0e0;
-            padding: 20px;
+        /* --- Page Styling (Ethereal Template) --- */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 50px;
+            box-sizing: border-box;
+            background-color: #fff;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s;
+            overflow-y: auto; /* Enable scrolling for long pages */
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            position: relative; /* Bring the active page into the flow */
+            z-index: 10;
+        }
+
+        /* Content within a page */
+        .content-page {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            color: #2c3e50;
+        }
+
+        h1 { font-size: 2.5em; text-align: center; margin-top: 100px; }
+        h2 { font-size: 1.8em; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+
+        /* Cover Page Specifics */
+        .cover-page {
+            background: linear-gradient(135deg, #f0f4f7, #e0e8ed);
             text-align: center;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .upload-zone:hover {
-            border-color: var(--color-primary);
+        .cover-page h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
         }
 
-        #marketingSection {
-            display: none;
-            margin-top: 40px;
-            background: rgba(255,255,255,0.95);
-            padding: 40px;
-            border-radius: 16px;
+        .cover-page .subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 50px;
+        }
+
+        .cover-page .author {
+            font-size: 1.2em;
+            color: #34495e;
+            position: absolute;
+            bottom: 100px;
+            width: 80%;
+        }
+
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            font-size: 0.9em;
+            color: #7f8c8d;
         }
     </style>
-    <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
-    <script src="https://unpkg.com/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <div class="app-header">
-            <h1>ProBook AI</h1>
-            <h2 class="subtitle">Publish-Ready in One Click</h2>
+
+    <div class="navigation">
+        <button id="prevBtn" onclick="previousPage()">← Previous</button>
+        <div class="page-info">
+            Page <span id="currentPage">1</span> of <span id="totalPages">8</span>
         </div>
-
-        <div class="control-panel">
-            <!-- Template selector as before -->
-            <div class="input-group" style="margin-top: 20px;">
-                <label>Book Category</label>
-                <select id="category">
-                    <option value="">Select a category</option>
-                    <option value="business">Business / Entrepreneurship</option>
-                    <option value="self-help">Self-help / Personal growth</option>
-                    <option value="memoir">Memoir / Narrative nonfiction</option>
-                    <option value="tech">Tech / How-to</option>
-                    <option value="cookbooks">Cookbooks / Lifestyle</option>
-                    <option value="design">Design / Artbooks</option>
-                    <option value="children">Children’s / Short reads</option>
-                </select>
-            </div>
-
-            <div class="control-grid">
-                <!-- Title, subtitle, author, copyright, ISBN as before -->
-            </div>
-
-            <div class="input-group" style="margin-top: 20px;">
-                <label>Introduction Text (Edit as needed)</label>
-                <textarea id="introText">...</textarea>
-            </div>
-
-            <!-- Dedication, Foreword, How to Use, About Author as before -->
-
-            <!-- Text and Images uploads with drop zones as before -->
-
-            <label style="margin-top: 20px;"><input type="checkbox" id="useRoman" checked> Use Roman numerals for front matter</label>
-
-            <div class="button-group" style="margin-top: 30px;">
-                <button class="btn btn-primary" onclick="handleNext()">Next</button>
-                <button class="btn btn-secondary" onclick="handleSubmit()">Submit</button>
-            </div>
-        </div>
-
-        <div class="preview-container" id="previewContainer"></div>
-
-        <div id="marketingSection" style="display:none;">
-            <h2>Create Your Marketing Materials</h2>
-            <p>Generate high-value assets for social media, emails, and more.</p>
-            <button class="btn btn-primary" onclick="generateSocialTile()">Generate Social Tile</button>
-            <button class="btn btn-primary" onclick="generateEmailSequence()">Generate Pre-Launch Emails</button>
-        </div>
+        <button id="nextBtn" onclick="nextPage()">Next →</button>
+        <button onclick="addNewPage()" style="background-color: #3498db;">+ Add Custom Page</button>
+        <button style="background-color: #e74c3c;">Download PDF</button>
     </div>
 
+    <div id="previewContainer">
+
+        <div class="page cover-page active" data-page="0">
+            <h1>The PROBOOK AI Guide</h1>
+            <div class="subtitle">Publish-Ready Ebooks in One Click</div>
+                        <div class="author">By A. N. Author</div>
+        </div>
+
+        <div class="page" data-page="1">
+            <div class="content-page">
+                <h2>Table of Contents</h2>
+                <ol>
+                    <li>Introduction . . . . . . . . . . . . . . . . . . . . . . . . . 3</li>
+                    <li>Getting Started . . . . . . . . . . . . . . . . . . . . . . . . 4</li>
+                    <li>Template Deep Dive . . . . . . . . . . . . . . . . . . . . . 5</li>
+                    <li>Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . 6</li>
+                    <li>Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</li>
+                    <li>Resources . . . . . . . . . . . . . . . . . . . . . . . . . . 8</li>
+                </ol>
+            </div>
+            <div class="page-number">i</div> </div>
+
+        <div class="page" data-page="2">
+            <div class="content-page">
+                <h2>Introduction</h2>
+                <p>Welcome to the era of instant publishing! PROBOOK AI leverages semantic analysis and category bias to intelligently place images and structure your draft. This is where your raw manuscript takes its first breath as a beautiful, print-ready ebook.</p>
+                <p>No more tedious formatting. Just upload your .docx or .txt file, select a template (like this Ethereal one), and watch the magic happen. The system handles all the required front and back matter automatically.</p>
+            </div>
+            <div class="page-number">3</div>
+        </div>
+
+        <div class="page" data-page="3">
+            <div class="content-page">
+                <h2>Getting Started</h2>
+                <p>Getting your book ready is a simple 5-step process:</p>
+                <ol>
+                    <li>**Upload:** Your manuscript (.docx or .txt)</li>
+                    <li>**Customize:** Add images (optional) and set the book category.</li>
+                    <li>**Template:** Choose one of the 7 premium templates.</li>
+                    <li>**Preview:** Click 'Update Preview' to see the result.</li>
+                    <li>**Export:** Hit 'Export to PDF' for a print-ready file.</li>
+                </ol>
+                <p>The AI handles everything from optimal line spacing to intelligent hyphenation, ensuring a professional look that rivals traditionally published books.</p>
+            </div>
+            <div class="page-number">4</div>
+        </div>
+
+        <div class="page" data-page="4">
+            <div class="content-page">
+                <h2>Template Deep Dive</h2>
+                <p>The **Ethereal** template you see here is designed for light, airy non-fiction and poetry. It uses a soft color palette and classic serif fonts for a sophisticated feel.</p>
+                <p>Other templates include **Organic** (for cookbooks and nature guides), **Architectural** (for technical manuals), and **Pro** (a clean, modern look for business books). Each template applies specific rules for image size, caption placement, and header/footer design.</p>
+            </div>
+            <div class="page-number">5</div>
+        </div>
+
+        <div class="page" data-page="5">
+            <div class="content-page">
+                <h2>Conclusion</h2>
+                <p>You have taken the final step in turning your draft into a polished product. PROBOOK AI is designed to save you countless hours of manual formatting, allowing you to focus on what you do best: **writing**.</p>
+                <p>With features like **TF-IDF Smart Image Placement** and **Auto Front/Back Matter**, you're equipped to publish professional-quality work instantly. We hope you enjoy the simplicity and power of automated design.</p>
+                <h3>What's Next?</h3>
+                <p>Review the final PDF and hit the market! We encourage you to explore the other features, including the built-in marketing tools for social media banners and email templates.</p>
+                <div class="page-number">6</div>
+            </div> </div> <div class="page" data-page="6">
+            <div class="content-page">
+                <h2>Appendix: PROBOOK AI Tech Stack</h2>
+                <p>The magic behind the system is built with:</p>
+                <ul>
+                    <li>**HTML + CSS + JS** (Single File Output)</li>
+                    <li>**Mammoth.js:** Used to convert .docx to HTML.</li>
+                    <li>**Html2pdf.js + PUG:** For robust PDF export.</li>
+                    <li>**TF-IDF:** Smart image placement and semantic analysis.</li>
+                </ul>
+                <p>This allows for a lightweight, fast, and highly portable solution.</p>
+                <div class="page-number">7</div>
+            </div>
+        </div>
+
+        <div class="page" data-page="7">
+            <div class="content-page">
+                <h2>Resources & Acknowledgments</h2>
+                <p>Thank you for using PROBOOK AI. Check out the following resources for support and community:</p>
+                <p>**GitHub Repo:** `github.com/allyd69/PROBOOK-AI`</p>
+                <p>**Live Demo:** `allyd69.github.io/PROBOOK-AI`</p>
+                <p>Special thanks to the open-source community for providing the underlying tools that make this possible.</p>
+                <div class="page-number">8</div>
+            </div>
+        </div>
+
+        </div>
+
     <script>
-    function handleNext() {
-        // Add your next-step logic here
-        alert('Next button clicked!');
-    }
-    function handleSubmit() {
-        // Add your submit logic here
-        alert('Submit button clicked!');
-    }
+        // --- Navigation Logic ---
+        let currentPageIndex = 0;
+        let totalPagesCount = 0; // Will be set dynamically on init
+        const currentTemplate = 'ethereal'; // Used for dynamic page styling
+
+        /**
+         * Hides all pages and shows the one at the given index.
+         * Updates the navigation state (page number and button disabled states).
+         * @param {number} index - The zero-based index of the page to show.
+         */
+        function showPage(index) {
+            const pages = document.querySelectorAll('#previewContainer > .page');
+            totalPagesCount = pages.length;
+
+            pages.forEach(p => p.classList.remove('active'));
+
+            if (index >= 0 && index < totalPagesCount) {
+                pages[index].classList.add('active');
+                currentPageIndex = index;
+
+                // Update page number display
+                document.getElementById('currentPage').textContent = index + 1;
+                document.getElementById('totalPages').textContent = totalPagesCount;
+            } else if (index < 0) {
+                // Stay on the first page if trying to go back from it
+                showPage(0);
+                return;
+            } else if (index >= totalPagesCount) {
+                // Stay on the last page if trying to go forward from it
+                showPage(totalPagesCount - 1);
+                return;
+            }
+
+            // Update button disabled state
+            document.getElementById('prevBtn').disabled = (currentPageIndex === 0);
+            document.getElementById('nextBtn').disabled = (currentPageIndex === totalPagesCount - 1);
+        }
+
+        function nextPage() {
+            showPage(currentPageIndex + 1);
+        }
+
+        function previousPage() {
+            showPage(currentPageIndex - 1);
+        }
+
+        /**
+         * Dynamically appends a new custom page to the preview.
+         */
+        function addNewPage() {
+            const container = document.getElementById('previewContainer');
+            const newIndex = container.children.length; // Next available data-page index
+            const newPage = document.createElement('div');
+            
+            // Apply the current template class for styling
+            newPage.className = `page template-${currentTemplate}`; 
+            newPage.dataset.page = newIndex;
+            
+            // New page content
+            newPage.innerHTML = `
+                <div class="content-page">
+                    <h2>Custom Page ${newIndex - 1}</h2>
+                    <p contenteditable="true">Start typing your content here... This text is **editable** in the preview.</p>
+                    <p contenteditable="true">You can add images, tables, or anything else you need. This custom page is now page number **${newIndex + 1}**.</p>
+                    <div class="page-number">${newIndex + 1}</div>
+                </div>
+            `;
+            
+            container.appendChild(newPage);
+            
+            // totalPagesCount is updated automatically by showPage, but we call it anyway
+            totalPagesCount = container.children.length; 
+            
+            // Immediately navigate to the newly created page
+            showPage(newIndex); 
+        }
+
+        // Initialize the first page and count total pages on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage(0);
+        });
+
     </script>
+
 </body>
 </html>
