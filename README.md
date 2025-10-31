@@ -1,10 +1,10 @@
-# ProEbook-AI
+# PRO-EBOOK
 **Publish-Ready in One Click**
 
 ![ProBook AI](https://raw.githubusercontent.com/allyd69/PROBOOK-AI/main/screenshot.png)  
 *(Add a screenshot later — see below)*
 
-**Turn any draft into a stunning, print-ready ebook — instantly.**
+**Turn any draft into a stunning, print-ready proebook — instantly.**
 
 ---
 
@@ -19,7 +19,7 @@
 ---
 
 ## 🚀 Live Demo
-[Try ProBook AI Now](https://allyd69.github.io/PROBOOK-AI/)
+[Try PRO-EBOOK Now](https://allyd69.github.io/PRO-EBOOK/)
 
 
 ---
@@ -42,7 +42,7 @@
 ---
 
 ## 📸 Add a Screenshot (Optional but PRO)
-1. Open [live site](https://allyd69.github.io/PROBOOK-AI/ebook.html)
+1. Open [live site](https://allyd69.github.io/PRO-EBOOK)
 2. Press `F11` → `Ctrl+Shift+P` → type "screenshot"
 3. Save → Upload to repo → Name: `screenshot.png`
 4. Update README image link
