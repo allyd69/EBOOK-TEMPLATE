@@ -1,7 +1,7 @@
 # PRO-EBOOK
 **Publish-Ready in One Click**
 
-![ProBook AI](https://raw.githubusercontent.com/allyd69/PROBOOK-AI/main/screenshot.png)  
+![ProBook AI](https://raw.githubusercontent.com/allyd69/PRO-EBOOK/main/screenshot.png)  
 *(Add a screenshot later — see below)*
 
 **Turn any draft into a stunning, print-ready proebook — instantly.**
