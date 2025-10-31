@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProBook AI – Publish-Ready in One Click</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=[...]
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
         
         :root {
             --color-primary: #8b4789;
@@ -42,6 +42,22 @@
             border-radius: 16px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.25));
+            z-index: 1;
+        }
+
+        .app-header h1,
+        .app-header .subtitle {
+            position: relative;
+            z-index: 2;
         }
 
         .app-header h1 {
@@ -55,7 +71,7 @@
             margin-bottom: 10px;
         }
 
-        .app-header p {
+        .app-header .subtitle {
             color: var(--color-light);
             opacity: 0.8;
             font-size: 14px;
@@ -228,8 +244,6 @@
             page-break-after: always;
         }
 
-        /* TEMPLATE STYLES - as before */
-
         .upload-zone {
             border: 2px dashed #e0e0e0;
             padding: 20px;
@@ -250,26 +264,6 @@
             padding: 40px;
             border-radius: 16px;
         }
-
-        /* INSERTED: Option B — make .app-header use a lighter overlay and keep text on top */
-        .app-header {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .app-header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.25));
-            z-index: 1;
-        }
-
-        .app-header h1,
-        .app-header .subtitle {
-            position: relative;
-            z-index: 2;
-        }
     </style>
     <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
     <script src="https://unpkg.com/marked/marked.min.js"></script>
@@ -279,12 +273,11 @@
     <div class="app-container">
         <div class="app-header">
             <h1>ProBook AI</h1>
-<h2 class="subtitle">Publish-Ready in One Click</h2>
+            <h2 class="subtitle">Publish-Ready in One Click</h2>
         </div>
 
         <div class="control-panel">
             <!-- Template selector as before -->
-
             <div class="input-group" style="margin-top: 20px;">
                 <label>Book Category</label>
                 <select id="category">
@@ -315,7 +308,8 @@
             <label style="margin-top: 20px;"><input type="checkbox" id="useRoman" checked> Use Roman numerals for front matter</label>
 
             <div class="button-group" style="margin-top: 30px;">
-                <!-- Buttons as before -->
+                <button class="btn btn-primary" onclick="handleNext()">Next</button>
+                <button class="btn btn-secondary" onclick="handleSubmit()">Submit</button>
             </div>
         </div>
 
@@ -330,16 +324,14 @@
     </div>
 
     <script>
-        // Full JS as in previous, with refined image placement, category bias in minSimilarity, fallback logic, and keyword extraction using nouns focus (filter words if possible)
-        // For example, in extractKeywords, add: words = words.filter(w => isNoun(w)); // Placeholder for POS, or simple heuristic
-        // Update matchImagesToChapters with category bias as per your refinements
-        // Ensure fallback: if no match, place every N pages
-        let N = 5; // Every 5 pages for fallback
-        // In placements fallback: for (let i = 0; i < remaining.length; i++) {
-        //     let ch = Math.floor(i * chapters.length / remaining.length);
-        //     placements.push({chapter: ch, image: remaining[i]});
-        // }
-        // Rest as before
+    function handleNext() {
+        // Add your next-step logic here
+        alert('Next button clicked!');
+    }
+    function handleSubmit() {
+        // Add your submit logic here
+        alert('Submit button clicked!');
+    }
     </script>
 </body>
 </html>
