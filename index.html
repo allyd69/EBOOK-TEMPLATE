@@ -3,800 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROBOOK AI: Ebook Creator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <title>Professional Ebook Creator Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* --- General Styling --- */
+        :root {
+            --color-primary: #8b4789;
+            --color-secondary: #d4a373;
+            --color-accent: #2f5d62;
+            --color-highlight: #c1666b;
+            --color-dark: #1f2421;
+            --color-light: #fef9ef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Georgia', serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #333;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1f2421 0%, #2f3e46 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
         }
 
-        /* --- Main Title Bar (Top of Image 2) --- */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
         .app-header {
-            width: 800px;
-            max-width: 90%; /* Match form width */
-            background-color: #34495e;
-            color: white;
-            padding: 15px 20px; /* FIX: REDUCED VERTICAL PADDING */
             text-align: center;
-            border-radius: 8px 8px 0 0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            margin-bottom: 0; /* FIX: Remove gap */
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .app-header h1 {
-            margin: 0;
-            font-size: 2em;
-            font-family: sans-serif;
-            letter-spacing: 1px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
         }
+
         .app-header p {
-            margin: 5px 0 0;
-            font-size: 0.9em;
+            color: var(--color-light);
             opacity: 0.8;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        /* --- Input Form Styling (Mimicking Image 2) --- */
-        #inputForm {
-            background-color: #ffffff;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 20px; /* FIX: REDUCED PADDING */
-            width: 800px;
-            max-width: 90%;
-            margin-bottom: 20px;
-            
-            /* --- FIX: Force scroll within the form if content is too tall --- */
-            max-height: 80vh; /* Set a maximum height (80% of viewport height) */
-            overflow-y: auto; /* Allow vertical scrolling */
-            /* ----------------------------------------------------------------- */
-        }
-        #inputForm h2 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            color: #2c3e50;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-        .form-group select,
-        .form-group textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-            font-family: 'Georgia', serif;
-        }
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .checkbox-group input {
-            margin-right: 10px;
+        .control-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
-        .form-actions {
-            text-align: center;
-            margin-top: 30px;
-            padding-bottom: 10px; /* Add slight padding to the bottom of the form */
-        }
-        .form-actions button {
-            padding: 12px 25px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .form-actions button:hover {
-            background-color: #0056b3;
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
-        /* --- Navigation Bar (for Preview) --- */
-        .navigation {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: space-between;
-            width: 800px;
-            max-width: 90%;
-        }
-        
-        .hide-for-print {
-            display: none !important;
-        }
-
-        .navigation button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .navigation button.secondary {
-            background-color: #6c757d;
-        }
-        .navigation button.secondary:hover {
-            background-color: #5a6268;
-        }
-
-
-        .navigation button:hover:not(:disabled) {
-            background-color: #45a049;
-        }
-
-        .navigation button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            font-size: 1.1em;
-            color: #333;
-        }
-
-        /* --- Preview Container - FIXED HEIGHT FOR PROFESSIONAL LOOK --- */
-        #previewContainer {
-            position: relative;
-            width: 800px;
-            height: 1000px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            background-color: #fff;
-            padding: 0;
-            overflow: hidden; 
-            margin-top: 0;
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* --- Page Styling --- */
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 50px;
-            box-sizing: border-box;
-            background-color: #fff;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s;
-            overflow-y: hidden;
-        }
-
-        .page.active {
-            opacity: 1;
-            visibility: visible;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* PDF Generation Styles (pdf-ready class) */
-        .page.pdf-ready {
-            position: relative; 
-            opacity: 1;
-            visibility: visible;
-            height: auto; 
-            min-height: 1000px; 
-            overflow-y: hidden;
-            page-break-after: always; 
-        }
-        .page:last-child.pdf-ready {
-            page-break-after: avoid; 
-        }
-
-        /* Content within a page */
-        .content-page {
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-            color: #333;
-            min-height: calc(100% - 40px); 
-        }
-
-        h1, h2, h3 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            color: #2c3e50;
-        }
-
-        h1 { font-size: 2.5em; text-align: center; margin-top: 100px; }
-        h2 { font-size: 1.8em; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
-
-        /* Cover Page Specifics */
-        .cover-page {
-            background: linear-gradient(135deg, #f0f4f7, #e0e8ed);
-            text-align: center;
+        .input-group {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            gap: 8px;
         }
 
-        /* Page Number */
-        .page-number {
-            position: absolute;
-            bottom: 20px;
-            right: 50%;
-            transform: translateX(50%);
-            font-size: 0.9em;
-            color: #7f8c8d;
+        .input-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-dark);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
-    </style>
-</head>
-<body>
-
-    <div class="app-header">
-        <h1>Professional Ebook Creator</h1>
-        <p>DESIGN & DEPLOY BEAUTIFUL EBOOKS</p>
-    </div>
-
-    
-<div id="inputFormSection">
-        <div id="inputForm">
-            <h2>Book Details</h2>
-            <div class="form-group">
-                <label for="bookCategory">BOOK CATEGORY</label>
-                <select id="bookCategory">
-                    <option value="">Select a category</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="non-fiction">Non-Fiction</option>
-                    <option value="science">Science & Technology</option>
-                    <option value="history">History</option>
-                    <option value="biography">Biography</option>
-                    <option value="poetry">Poetry</option>
-                    <option value="cookbooks">Cookbooks</option>
-                    <option value="children">Children's Books</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="introductionText">INTRODUCTION TEXT (EDIT AS NEEDED)</label>
-                <textarea id="introductionText" placeholder="Start typing your introduction here..."></textarea>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="romanNumerals" checked>
-                <label for="romanNumerals">Use Roman numerals for front matter</label>
-            </div>
-            <div class="form-actions">
-                <button onclick="generatePreview()">Generate Preview</button>
-            </div>
-        </div>
-    </div>
-
-    
-<div id="previewSection" style="display: none;">
-        <div class="navigation" id="mainNavigation">
-            <button class="secondary" onclick="showInputForm()">← Back to Edit</button>
-            <button id="prevBtn" onclick="previousPage()">← Previous</button>
-            <div class="page-info">
-                Page <span id="currentPage">1</span> of <span id="totalPages">8</span>
-            </div>
-            <button id="nextBtn" onclick="nextPage()">Next →</button>
-            <button onclick="addNewPage()" style="background-color: #3498db;">+ Add Custom Page</button>
-            <button id="downloadBtn" onclick="downloadPDF()" style="background-color: #e74c3c;">Download PDF</button>
-        </div>
-
-        <div id="previewContainer">
-            <div class="page cover-page active" data-page="0">
-                <h1>The PROBOOK AI Guide</h1>
-                <div class="subtitle">Publish-Ready Ebooks in One Click</div>
-                <div class="author">By A. N. Author</div>
-            </div>
-
-            <div class="page" data-page="1">
-                <div class="content-page">
-                    <h2>Table of Contents</h2>
-                    <ol>
-                        <li>Introduction . . . . . . . . . . . . . . . . . . . . . . . . . 3</li>
-                        <li>Getting Started . . . . . . . . . . . . . . . . . . . . . . . . 4</li>
-                        <li>Template Deep Dive . . . . . . . . . . . . . . . . . . . . . 5</li>
-                        <li>Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . 6</li>
-                        <li>Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</li>
-                        <li>Resources . . . . . . . . . . . . . . . . . . . . . . . . . . 8</li>
-                    </ol>
-                </div>
-                <div class="page-number">i</div> </div>
-
-            <div class="page" data-page="2">
-                <div class="content-page">
-                    <h2>Introduction</h2>
-                    <p id="dynamicIntroduction">Welcome to the era of instant publishing! PROBOOK AI leverages semantic analysis and category bias to intelligently place images and structure your draft. This is where your raw manuscript takes its first breath as a beautiful, print-ready ebook.</p>
-                    <p>No more tedious formatting. Just upload your .docx or .txt file, select a template (like this Ethereal one), and watch the magic happen. The system handles all the required front and back matter automatically.</p>
-                </div>
-                <div class="page-number">3</div>
-            </div>
-
-            <div class="page" data-page="3">
-                <div class="content-page">
-                    <h2>Getting Started</h2>
-                    <p>Getting your book ready is a simple 5-step process:</p>
-                    <ol>
-                        <li>**Upload:** Your manuscript (.docx or .txt)</li>
-                        <li>**Customize:** Add images (optional) and set the book category.</li>
-                        <li>**Template:** Choose one of the 7 premium templates.</li>
-                        <li>**Preview:** Click 'Update Preview' to see the result.</li>
-                        <li>**Export:** Hit 'Export to PDF' for a print-ready file.</li>
-                    </ol>
-                    <p>The AI handles everything from optimal line spacing to intelligent hyphenation, ensuring a professional look that rivals traditionally published books.</p>
-                </div>
-                <div class="page-number">4</div>
-            </div>
-
-            <div class="page" data-page="4">
-                <div class="content-page">
-                    <h2>Template Deep Dive</h2>
-                    <p>The **Ethereal** template you see here is designed for light, airy non-fiction and poetry. It uses a soft color palette and classic serif fonts for a sophisticated feel.</p>
-                    <p>Other templates include **Organic** (for cookbooks and nature guides), **Architectural** (for technical manuals), and **Pro** (a clean, modern look for business books). Each template applies specific rules for image size, caption placement, and header/footer design.</p>
-                </div>
-                <div class="page-number">5</div>
-            </div>
-
-            <div class="page" data-page="5">
-                <div class="content-page">
-                    <h2>Conclusion</h2>
-                    <p>You have taken the final step in turning your draft into a polished product. PROBOOK AI is designed to save you countless hours of manual formatting, allowing you to focus on what you do best: **writing**.</p>
-                    <p>With features like **TF-IDF Smart Image Placement** and **Auto Front/Back Matter**, you're equipped to publish professional-quality work instantly. We hope you enjoy the simplicity and power of automated design.</p>
-                    <h3>What's Next?</h3>
-                    <p>Review the final PDF and hit the market! We encourage you to explore the other features, including the built-in marketing tools for social media banners and email templates.</p>
-                    <div class="page-number">6</div>
-                </div> </div> <div class="page" data-page="6">
-                <div class="content-page">
-                    <h2>Appendix: PROBOOK AI Tech Stack</h2>
-                    <p>The magic behind the system is built with:</p>
-                    <ul>
-                        <li>**HTML + CSS + JS** (Single File Output)</li>
-                        <li>**Mammoth.js:** Used to convert .docx to HTML.</li>
-                        <li>**Html2pdf.js + PUG:** For robust PDF export.</li>
-                        <li>**TF-IDF:** Smart image placement and semantic analysis.</li>
-                    </ul>
-                    <p>This allows for a lightweight, fast, and highly portable solution.</p>
-                    <div class="page-number">7</div>
-                </div>
-            </div>
-
-            <div class="page" data-page="7">
-                <div class="content-page">
-                    <h2>Resources & Acknowledgments</h2>
-                    <p>Thank you for using PROBOOK AI. Check out the following resources for support and community:</p>
-                    <p>**GitHub Repo:** `github.com/allyd69/PROBOOK-AI`</p>
-                    <p>**Live Demo:** `allyd69.github.io/PROBOOK-AI`</p>
-                    <p>Special thanks to the open-source community for providing the underlying tools that make this possible.</p>
-                    <div class="page-number">8</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // --- Navigation Logic ---
-        let currentPageIndex = 0;
-        let totalPagesCount = 0; 
-        const currentTemplate = 'ethereal';
-
-        // --- Toggle Form and Preview Sections ---
-        function showInputForm() {
-            document.getElementById('inputFormSection').style.display = 'block';
-            document.getElementById('previewSection').style.display = 'none';
-        }
-
-        function showPreview() {
-            document.getElementById('inputFormSection').style.display = 'none';
-            document.getElementById('previewSection').style.display = 'block';
-            showPage(currentPageIndex); 
-        }
-
-        function generatePreview() {
-            // Get values from the form
-            const category = document.getElementById('bookCategory').value;
-            const introductionText = document.getElementById('introductionText').value;
-            const useRomanNumerals = document.getElementById('romanNumerals').checked;
-
-            // Update dynamic content in the preview
-            if (introductionText) {
-                document.getElementById('dynamicIntroduction').textContent = introductionText;
-            } else {
-                document.getElementById('dynamicIntroduction').textContent = "No custom introduction provided. This is placeholder text.";
-            }
-
-            // Update title based on category (example)
-            document.querySelector('.cover-page h1').textContent = `The PROBOOK AI Guide (${category || 'General'})`;
-
-            // Display the preview
-            showPreview();
-            showPage(0); // Always start at the cover page for a new preview
-        }
-
-        function showPage(index) {
-            const pages = document.querySelectorAll('#previewContainer > .page');
-            totalPagesCount = pages.length;
-
-            pages.forEach(p => p.classList.remove('active'));
-
-            if (index >= 0 && index < totalPagesCount) {
-                pages[index].classList.add('active');
-                currentPageIndex = index;
-
-                document.getElementById('currentPage').textContent = index + 1;
-                document.getElementById('totalPages').textContent = totalPagesCount;
-            } else if (index < 0) {
-                showPage(0);
-                return;
-            } else if (index >= totalPagesCount) {
-                showPage(totalPagesCount - 1);
-                return;
-            }
-
-            document.getElementById('prevBtn').disabled = (currentPageIndex === 0);
-            document.getElementById('nextBtn').disabled = (currentPageIndex === totalPagesCount - 1);
-        }
-
-        function nextPage() {
-            showPage(currentPageIndex + 1);
-        }
-
-        function previousPage() {
-            showPage(currentPageIndex - 1);
-        }
-
-        function addNewPage() {
-            const container = document.getElementById('previewContainer');
-            const newIndex = container.children.length; 
-            const newPage = document.createElement('div');
-            
-            newPage.className = `page template-${currentTemplate}`; 
-            newPage.dataset.page = newIndex;
-            
-            newPage.innerHTML = `
-                <div class="content-page">
-                    <h2>Custom Page ${newIndex - 1}</h2>
-                    <p contenteditable="true">Start typing your content here... This text is **editable** in the preview.</p>
-                    <p contenteditable="true">You can add images, tables, or anything else you need. This custom page is now page number **${newIndex + 1}**.</p>
-                    <div class="page-number">${newIndex + 1}</div>
-                </div>
-            `;
-            
-            container.appendChild(newPage);
-            totalPagesCount = container.children.length; 
-            showPage(newIndex); 
-        }
-
-        // Download PDF Function with Loading State
-        async function downloadPDF() {
-            const element = document.getElementById('previewContainer');
-            const navigation = document.getElementById('mainNavigation');
-            const pages = document.querySelectorAll('#previewContainer > .page');
-            const downloadBtn = document.getElementById('downloadBtn');
-
-            // --- START: Loading State ---
-            downloadBtn.disabled = true;
-            downloadBtn.textContent = 'Generating PDF... (Please Wait)';
-            downloadBtn.style.backgroundColor = '#f39c12'; 
-
-            // Temporary Cleanup: HIDE the navigation bar
-            navigation.classList.add('hide-for-print');
-
-            // Prepare all pages for PDF generation
-            pages.forEach(p => p.classList.add('pdf-ready'));
-            
-            // Set options for the PDF
-            const options = {
-                margin: [0, 0, 0, 0], 
-                filename: 'PROBOOK_AI_Ebook_Final.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            // Generate and save the PDF
-            await html2pdf().set(options).from(element).save();
-
-            // --- END: Restore State ---
-            // Restore the view after PDF generation
-            pages.forEach(p => p.classList.remove('pdf-ready'));
-            navigation.classList.remove('hide-for-print');
-            
-            // Restore button state
-            downloadBtn.disabled = false;
-            downloadBtn.textContent = 'Download PDF';
-            downloadBtn.style.backgroundColor = '#e74c3c'; 
-            
-            // Ensure only the current page is visible after restore
-            showPage(currentPageIndex); 
-        }
-
-        // Initialize: Show the input form first when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            showInputForm();
-        });
-
-    </script>
-
-</body>
-</html>
-            max-width: 90%;
-        }
-        
-        .hide-for-print {
-            display: none !important;
-        }
-
-        .navigation button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .navigation button.secondary {
-            background-color: #6c757d; /* Grey for 'Back to Edit' */
-        }
-        .navigation button.secondary:hover {
-            background-color: #5a6268;
-        }
-
-
-        .navigation button:hover:not(:disabled) {
-            background-color: #45a049;
-        }
-
-        .navigation button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            font-size: 1.1em;
-            color: #333;
-        }
-
-        /* --- Preview Container - FIXED HEIGHT FOR PROFESSIONAL LOOK --- */
-        #previewContainer {
-            position: relative;
-            width: 800px;
-            height: 1000px; /* FIXED HEIGHT */
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            background-color: #fff;
-            padding: 0;
-            overflow: hidden; 
-            margin-top: 0; /* Align with header */
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* --- Page Styling --- */
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%; /* Use 100% of container height */
-            padding: 50px;
-            box-sizing: border-box;
-            background-color: #fff;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s;
-            overflow-y: hidden; /* Crucial: Prevents scrollbars in preview */
-        }
-
-        .page.active {
-            opacity: 1;
-            visibility: visible;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* PDF Generation Styles (pdf-ready class) */
-        .page.pdf-ready {
-            position: relative; 
-            opacity: 1;
-            visibility: visible;
-            height: auto; 
-            min-height: 1000px; 
-            overflow-y: hidden;
-            page-break-after: always; 
-        }
-        .page:last-child.pdf-ready {
-            page-break-after: avoid; 
-        }
-
-        /* Content within a page */
-        .content-page {
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-            color: #333;
-            min-height: calc(100% - 40px); 
-        }
-
-        h1, h2, h3 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            color: #2c3e50;
-        }
-
-        h1 { font-size: 2.5em; text-align: center; margin-top: 100px; }
-        h2 { font-size: 1.8em; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
-
-        /* Cover Page Specifics */
-        .cover-page {
-            background: linear-gradient(135deg, #f0f4f7, #e0e8ed);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Page Number */
-        .page-number {
-            position: absolute;
-            bottom: 20px;
-            right: 50%;
-            transform: translateX(50%);
-            font-size: 0.9em;
-            color: #7f8c8d;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app-header">
-        <h1>Professional Ebook Creator</h1>
-        <p>DESIGN & DEPLOY BEAUTIFUL EBOOKS</p>
-    </div>
-
-    <div id="inputFormSection">
-        <div id="inputForm">
-            <h2>Book Details</h2>
-            <div class="form-group">
-                <label for="bookCategory">BOOK CATEGORY</label>
-                <select id="bookCategory">
-                    <option value="">Select a category</option>
-                    <option value="fiction">Fiction</option>
-                    <option value="non-fiction">Non-Fiction</option>
-                    <option value="science">Science & Technology</option>
-                    <option value="history">History</option>
-                    <option value="biography">Biography</option>
-                    <option value="poetry">Poetry</option>
-                    <option value="cookbooks">Cookbooks</option>
-                    <option value="children">Children's Books</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="introductionText">INTRODUCTION TEXT (EDIT AS NEEDED)</label>
-                <textarea id="introductionText" placeholder="Start typing your introduction here..."></textarea>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="romanNumerals" checked>
-                <label for="romanNumerals">Use Roman numerals for front matter</label>
-            </div>
-            <div class="form-actions">
-                <button onclick="generatePreview()">Generate Preview</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="previewSection" style="display: none;">
-        <div class="navigation" id="mainNavigation">
-            <button class="secondary" onclick="showInputForm()">← Back to Edit</button>
-            <button id="prevBtn" onclick="previousPage()">← Previous</button>
-            <div class="page-info">
-                Page <span id="currentPage">1</span> of <span id="totalPages">8</span>
-            </div>
-            <button id="nextBtn" onclick="nextPage()">Next →</button>
-            <button onclick="addNewPage()" style="background-color: #3498db;">+ Add Custom Page</button>
-            <button id="downloadBtn" onclick="downloadPDF()" style="background-color: #e74c3c;">Download PDF</button>
-        </div>
-
-        <div id="previewContainer">
-            <div class="page cover-page active" data-page="0">
-                <h1>The PROBOOK AI Guide</h1>
-                <div class="subtitle">Publish-Ready Ebooks in One Click</div>
-                <div class="author">By A. N. Author</div>
-            </div>
-
-            <div class="page" data-page="1">
-                <div class="content-page">
-                    <h2>Table of Contents</h2>
-                    <ol>
-                        <li>Introduction . . . . . . . . . . . . . . . . . . . . . . . . . 3</li>
-                        <li>Getting Started . . . . . . . . . . . . . . . . . . . . . . . . 4</li>
-                        <li>Template Deep Dive . . . . . . . . . . . . . . . . . . . . . 5</li>
-                        <li>Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . 6</li>
-                        <li>Appendix . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</li>
-                        <li>Resources . . . . . . . . . . . . . . . . . . . . . . . . . . 8</li>
-                    </ol>
-                </div>
-                <div class="page-number">i</div> </div>
-
-            <div class="page" data-page="2">
-                <div class="content-page">
-                    <h2>Introduction</h2>
-                    <p id="dynamicIntroduction">Welcome to the era of instant publishing! PROBOOK AI leverages semantic analysis and category bias to intelligently place images and structure your draft. This is where your raw manuscript takes its first breath as a beautiful, print-ready ebook.</p>
-                    <p>No more tedious formatting. Just upload your .docx or .txt file, select a template (like this Ethereal one), and watch the magic happen. The system handles all the required front and back matter automatically.</p>
-                </div>
-                <div class="page-number">3</div>
-            </div>
-
-            <div class="page" data-page="3">
-                <div class="content-page">
-                    <h2>Getting Started</h2>
-                    <p>Getting your book ready is a simple 5-step process:</p>
-                    <ol>
-                        <li>**Upload:** Your manuscript (.docx or .txt)</li>
-                        <li>**Customize:** Add images (optional) and set the book category.</li>
-                        <li>**Template:** Choose one of the 7 premium templates.</li>
-                        <li>**Preview:** Click 'Update Preview' to see the result.</li>
-                        <li>**Export:** Hit 'Export to PDF' for a print-ready file.</li>
-                    </ol>
-                    <p>The AI handles everything from optimal line spacing to intelligent hyphenation, ensuring a professional look that rivals traditionally published books.</p>
-                </div>
-                <div class="page-number">4</div>
-            </div>
-
-            <div class="page" data-page="4">
-                <div class="content-page">
-                    <h2>Template Deep Dive</h2>
-                    <p>The **Ethereal** template you see here is designed for light, airy non-fiction and poetry. It uses a soft color palette and classic serif fonts for a sophisticated feel.</p>
-                    <p>Other templates include **Organic** (for cookbooks and nature guides), **Architectural** (for technical manuals), and **Pro** (a clean, modern look for business books). Each template applies specific rules for image size, caption placement, and header/footer design.</p>
-                </div>
-                <div class="page-number">5</div>
-            </div>
-
-            <div class="page" data-page="5">
-                <div class="content-page">
-                    <h2>Conclusion</h2>
-                    <p>You have taken the final step in turning your draft into a polished product. PROBOOK AI is designed to save you countless hours of manual formatting, allowing you to focus on what you do best: **writing**.</p>
-                    <p>With features like **TF-IDF Smart Image Placement** and **Auto Front/Back Matter**, you're equipped to publish professional-quality work instantly. We hope you enjoy the simplicity and power of automated design.</p>
-                    <h3>What's Next?</h3>
-                    <p>Review the final PDF and hit the market! We encourage you to explore the other features, including the built-in marketing tools for social media banners and email templates.</p>
-                    <div class="page-number">6</div>
-                </div> </div> <div class="page" data-page="6">
-                <div class="content-page">
-                    <h2>Appendix: PROBOOK AI Tech Stack</h2>
-                    <p>The magic behind the system is built with:</p>
-                    <ul>
-                        <li>**HTML + CSS + JS** (Single File Output)</li>
-                        <li>**Mammoth.js:** Used to convert .docx to HTML.</li>
-                        <li>**Html2pdf.js + PUG:** For robust PDF export.</li>
-                        <li>**TF-IDF:** Smart image placement and semantic analysis.</li>
-                    </ul>
-                    <p>This allows for a lightweight,
 
         .input-group input,
         .input-group select,
@@ -822,6 +115,7 @@
             resize: vertical;
             min-height: 100px;
             font-size: 14px;
+            line-height: 1.6;
         }
 
         .template-selector {
@@ -868,6 +162,7 @@
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn {
@@ -916,11 +211,58 @@
             transform: translateY(-2px);
         }
 
+        .navigation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 14px 28px;
+            background: white;
+            border: 3px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-indicator {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .preview-container {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
+            position: relative;
         }
 
         .page {
@@ -932,34 +274,330 @@
             overflow: hidden;
             border-radius: 8px;
             page-break-after: always;
-        }
-
-        /* TEMPLATE STYLES - as before */
-
-        .upload-zone {
-            border: 2px dashed #e0e0e0;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-
-        .upload-zone:hover {
-            border-color: var(--color-primary);
-        }
-
-        #marketingSection {
             display: none;
-            margin-top: 40px;
-            background: rgba(255,255,255,0.95);
-            padding: 40px;
-            border-radius: 16px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* TEMPLATE 1: ETHEREAL GRADIENT */
+        .template-ethereal .cover {
+            background: linear-gradient(135deg, #8b4789 0%, #d4a373 50%, #2f5d62 100%);
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-ethereal .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            50% { transform: translate(-20px, -20px) scale(1.2); opacity: 0.6; }
+        }
+
+        .template-ethereal .cover h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 68px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-ethereal .cover .subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 50px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-ethereal .cover .author {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-ethereal .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            margin: 25px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TEMPLATE 2: ARCHITECTURAL */
+        .template-architectural .cover {
+            background: #1f2421;
+            padding: 80px 60px;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .template-architectural .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .template-architectural .cover::after {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            bottom: 50px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .template-architectural .cover h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            color: white;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-architectural .cover .subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            color: var(--color-secondary);
+            max-width: 400px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-architectural .cover .author {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TEMPLATE 3: ORGANIC FLOW */
+        .template-organic .cover {
+            background: linear-gradient(135deg, #c1666b 0%, #8b4789 100%);
+            padding: 80px 60px;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .template-organic .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 163, 115, 0.3) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .template-organic .cover h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .template-organic .cover .subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 22px;
+            color: rgba(255,255,255,0.9);
+            margin-top: 30px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-organic .cover .author {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Content Pages */
+        .content-page {
+            padding: 70px 60px;
+            background: var(--color-light);
+            height: 100%;
+        }
+
+        .content-page h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 44px;
+            color: var(--color-primary);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .content-page h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            color: var(--color-accent);
+            margin: 35px 0 18px 0;
+            font-weight: 700;
+        }
+
+        .content-page p {
+            font-family: 'Crimson Text', serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .content-page ul {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-page li {
+            font-family: 'Crimson Text', serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            font-size: 14px;
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        .toc-page {
+            padding: 70px 60px;
+            background: var(--color-light);
+            height: 100%;
+        }
+
+        .toc-page h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            color: var(--color-primary);
+            margin-bottom: 50px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(139, 71, 137, 0.2);
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .toc-dots {
+            flex: 1;
+            border-bottom: 2px dotted rgba(139, 71, 137, 0.3);
+            margin: 0 15px 5px 15px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                padding: 0;
+            }
+            .app-header, .control-panel, .navigation-controls {
+                display: none !important;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                height: 100vh;
+                page-break-after: always;
+                border-radius: 0;
+                display: block !important;
+            }
+            
+            .template-ethereal .cover,
+            .template-architectural .cover,
+            .template-organic .cover,
+            .template-architectural .cover::before {
+                print-color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            * {
+                print-color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
         }
     </style>
-    <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
-    <script src="https://unpkg.com/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -969,63 +607,218 @@
         </div>
 
         <div class="control-panel">
-            <!-- Template selector as before -->
-
-            <div class="input-group" style="margin-top: 20px;">
-                <label>Book Category</label>
-                <select id="category">
-                    <option value="">Select a category</option>
-                    <option value="business">Business / Entrepreneurship</option>
-                    <option value="self-help">Self-help / Personal growth</option>
-                    <option value="memoir">Memoir / Narrative nonfiction</option>
-                    <option value="tech">Tech / How-to</option>
-                    <option value="cookbooks">Cookbooks / Lifestyle</option>
-                    <option value="design">Design / Artbooks</option>
-                    <option value="children">Children’s / Short reads</option>
-                </select>
+            <div class="input-group" style="margin-bottom: 30px;">
+                <label>Select Your Template Style</label>
+                <div class="template-selector" id="templateSelector">
+                    <div class="template-card active" data-template="ethereal">
+                        <h3>Ethereal Gradient</h3>
+                        <p>Flowing multi-tone design</p>
+                    </div>
+                    <div class="template-card" data-template="architectural">
+                        <h3>Architectural</h3>
+                        <p>Bold geometric structure</p>
+                    </div>
+                    <div class="template-card" data-template="organic">
+                        <h3>Organic Flow</h3>
+                        <p>Dynamic animated waves</p>
+                    </div>
+                </div>
             </div>
 
             <div class="control-grid">
-                <!-- Title, subtitle, author, copyright, ISBN as before -->
+                <div class="input-group">
+                    <label>Book Title</label>
+                    <input type="text" id="bookTitle" value="The Renaissance Mind">
+                </div>
+                <div class="input-group">
+                    <label>Subtitle</label>
+                    <input type="text" id="subtitle" value="Cultivating Wisdom in the Modern Age">
+                </div>
+                <div class="input-group">
+                    <label>Author Name</label>
+                    <input type="text" id="authorName" value="Dr. Sophia Montenegro">
+                </div>
+                <div class="input-group">
+                    <label>Chapter 1 Title</label>
+                    <input type="text" id="chapter1" value="The Foundation of Thought">
+                </div>
+                <div class="input-group">
+                    <label>Chapter 2 Title</label>
+                    <input type="text" id="chapter2" value="Patterns of Innovation">
+                </div>
+                <div class="input-group">
+                    <label>Chapter 3 Title</label>
+                    <input type="text" id="chapter3" value="The Art of Synthesis">
+                </div>
             </div>
 
             <div class="input-group" style="margin-top: 20px;">
                 <label>Introduction Text (Edit as needed)</label>
-                <textarea id="introText">...</textarea>
+                <textarea id="introText">Welcome to a transformative exploration of intellectual depth and creative thinking. This book represents years of research into how the greatest minds throughout history have approached learning, creativity, and problem-solving. Through these pages, you'll discover timeless principles that remain remarkably relevant in our rapidly evolving world.</textarea>
             </div>
 
-            <!-- Dedication, Foreword, How to Use, About Author as before -->
-
-            <!-- Text and Images uploads with drop zones as before -->
-
-            <label style="margin-top: 20px;"><input type="checkbox" id="useRoman" checked> Use Roman numerals for front matter</label>
-
             <div class="button-group" style="margin-top: 30px;">
-                <!-- Buttons as before -->
+                <button class="btn btn-primary" onclick="updatePreview()">📝 Update Preview</button>
+                <button class="btn btn-secondary" onclick="downloadPDF()">📥 Download PDF</button>
+                <button class="btn btn-add" onclick="addNewPage()">➕ Add Custom Page</button>
             </div>
         </div>
 
-        <div class="preview-container" id="previewContainer"></div>
+        <div class="navigation-controls">
+            <button class="nav-btn" onclick="previousPage()" id="prevBtn">
+                ◀ Previous
+            </button>
+            <div class="page-indicator">
+                <span>Page <span id="currentPage">1</span> of <span id="totalPages">8</span></span>
+            </div>
+            <button class="nav-btn" onclick="nextPage()" id="nextBtn">
+                Next ▶
+            </button>
+        </div>
 
-        <div id="marketingSection" style="display:none;">
-            <h2>Create Your Marketing Materials</h2>
-            <p>Generate high-value assets for social media, emails, and more.</p>
-            <button class="btn btn-primary" onclick="generateSocialTile()">Generate Social Tile</button>
-            <button class="btn btn-primary" onclick="generateEmailSequence()">Generate Pre-Launch Emails</button>
+        <div class="preview-container" id="previewContainer">
+            <!-- Pages will be generated here -->
         </div>
     </div>
 
     <script>
-        // Full JS as in previous, with refined image placement, category bias in minSimilarity, fallback logic, and keyword extraction using nouns focus (filter words if possible)
-        // For example, in extractKeywords, add: words = words.filter(w => isNoun(w)); // Placeholder for POS, or simple heuristic
-        // Update matchImagesToChapters with category bias as per your refinements
-        // Ensure fallback: if no match, place every N pages
-        let N = 5; // Every 5 pages for fallback
-        // In placements fallback: for (let i = 0; i < remaining.length; i++) {
-        //     let ch = Math.floor(i * chapters.length / remaining.length);
-        //     placements.push({chapter: ch, image: remaining[i]});
-        // }
-        // Rest as before
-    </script>
-</body>
-</html>
+        let currentTemplate = 'ethereal';
+        let customPages = 0;
+        let currentPageIndex = 0;
+        let totalPagesCount = 8;
+
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                currentTemplate = this.dataset.template;
+                updatePreview();
+            });
+        });
+
+        function updatePreview() {
+            const title = document.getElementById('bookTitle').value;
+            const subtitle = document.getElementById('subtitle').value;
+            const author = document.getElementById('authorName').value;
+            const chapter1 = document.getElementById('chapter1').value;
+            const chapter2 = document.getElementById('chapter2').value;
+            const chapter3 = document.getElementById('chapter3').value;
+            const introText = document.getElementById('introText').value;
+
+            const container = document.getElementById('previewContainer');
+            
+            container.innerHTML = `
+                <!-- Cover Page -->
+                <div class="page template-${currentTemplate} active" data-page="0">
+                    <div class="cover">
+                        ${currentTemplate === 'organic' ? '<div class="wave"></div>' : ''}
+                        <h1>${title}</h1>
+                        ${currentTemplate === 'ethereal' ? '<div class="divider"></div>' : ''}
+                        <div class="subtitle">${subtitle}</div>
+                        ${currentTemplate === 'ethereal' ? '<div class="divider"></div>' : ''}
+                        <div class="author">${author}</div>
+                    </div>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="page" data-page="1">
+                    <div class="toc-page">
+                        <h2>Contents</h2>
+                        <div class="toc-item">
+                            <span>Introduction</span>
+                            <div class="toc-dots"></div>
+                            <span>3</span>
+                        </div>
+                        <div class="toc-item">
+                            <span>Chapter 1: ${chapter1}</span>
+                            <div class="toc-dots"></div>
+                            <span>4</span>
+                        </div>
+                        <div class="toc-item">
+                            <span>Chapter 2: ${chapter2}</span>
+                            <div class="toc-dots"></div>
+                            <span>5</span>
+                        </div>
+                        <div class="toc-item">
+                            <span>Chapter 3: ${chapter3}</span>
+                            <div class="toc-dots"></div>
+                            <span>6</span>
+                        </div>
+                        <div class="toc-item">
+                            <span>Conclusion</span>
+                            <div class="toc-dots"></div>
+                            <span>7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Introduction Page -->
+                <div class="page" data-page="2">
+                    <div class="content-page">
+                        <h2>Introduction</h2>
+                        <p>${introText}</p>
+                        <p>The journey we embark upon together requires both intellectual curiosity and practical wisdom. These are not abstract concepts but living principles that can transform how we approach every aspect of our lives.</p>
+                        <h3>What You Will Discover</h3>
+                        <ul>
+                            <li>Timeless frameworks for creative problem-solving</li>
+                            <li>Methods for cultivating deeper understanding</li>
+                            <li>Strategies for synthesizing diverse knowledge</li>
+                            <li>Practices for sustained intellectual growth</li>
+                        </ul>
+                        <div class="page-number">3</div>
+                    </div>
+                </div>
+
+                <!-- Chapter 1 -->
+                <div class="page" data-page="3">
+                    <div class="content-page">
+                        <h2>Chapter One</h2>
+                        <h3>${chapter1}</h3>
+                        <p>Every great intellectual journey begins with establishing a solid foundation. The principles we explore here have been tested across centuries and cultures, proving their enduring value and universal applicability.</p>
+                        <p>Consider the great thinkers throughout history. What united them was not superior intelligence alone, but rather a systematic approach to understanding the world. They developed mental frameworks that allowed them to see patterns invisible to others.</p>
+                        <p>This chapter introduces you to these foundational frameworks. We'll examine how they were developed, why they work, and most importantly, how you can apply them immediately in your own thinking.</p>
+                        <h3>The Core Principles</h3>
+                        <p>At the heart of all exceptional thinking lie several key principles that transcend specific domains or disciplines. These principles form the bedrock upon which all advanced intellectual work is built.</p>
+                        <div class="page-number">4</div>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="page" data-page="4">
+                    <div class="content-page">
+                        <h2>Chapter Two</h2>
+                        <h3>${chapter2}</h3>
+                        <p>Innovation is not random—it follows patterns. Once you learn to recognize these patterns, you gain the ability to not only understand innovation but to create it yourself. This chapter reveals the hidden structures behind breakthrough thinking.</p>
+                        <p>Throughout history, the greatest innovations have emerged from the intersection of seemingly unrelated fields. The Renaissance produced unprecedented creativity precisely because its thinkers refused to be confined by traditional boundaries.</p>
+                        <h3>Recognizing Opportunity</h3>
+                        <p>Innovation begins with the ability to see what others miss. This requires training your mind to look beyond the obvious, to question assumptions, and to explore connections that initially seem improbable.</p>
+                        <ul>
+                            <li>Learn to identify weak signals before they become obvious trends</li>
+                            <li>Develop your capacity for analogical thinking</li>
+                            <li>Cultivate intellectual courage to pursue unconventional ideas</li>
+                        </ul>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="page" data-page="5">
+                    <div class="content-page">
+                        <h2>Chapter Three</h2>
+                        <h3>${chapter3}</h3>
+                        <p>Synthesis represents the highest form of intellectual work—the ability to integrate diverse knowledge into coherent new understanding. This is where true wisdom emerges, transcending mere accumulation of information.</p>
+                        <p>The modern world suffers from fragmentation. Knowledge is divided into increasingly narrow specializations, losing sight of the bigger picture. Synthesis reverses this trend, reconnecting what has been artificially separated.</p>
+                        <h3>The Practice of Integration</h3>
+                        <p>Synthesis is both an art and a skill. While some possess natural talent for seeing connections, everyone can develop this capacity through deliberate practice and proper guidance.</p>
+                        <p>Begin by exposing yourself to diverse fields of knowledge. Read broadly. Engage with ideas far removed from your expertise. Allow unexpected connections to emerge naturally from this rich intellectual ecosystem you're cultivating.</p>
+                        <div class="page-number">6</div>
+                    </div>
+                </div>
+
+                <!-- Conclusion -->
+                <div class="page" data-page="6">
+                    <div class="content-page">
+                        <h2>Conclusion</h2>
+                        <p>We have journeyed through the essential elements of exceptional thinking—from establishing foundations to recognizing patterns to achieving synthesis. Each concept builds upon the last, creating an integrated approach to intellectual development.</p>
+                        <p>But understanding these principles intellectually is merely the beginning. True mastery comes only through consistent application. The frameworks presented here must become living tools in your daily thinking, not abstract theories to be admired from afar.</p>
