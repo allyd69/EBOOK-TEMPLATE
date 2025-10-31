@@ -1,4 +1,4 @@
-# ProBook AI  
+# ProEbook-AI
 **Publish-Ready in One Click**
 
 ![ProBook AI](https://raw.githubusercontent.com/allyd69/PROBOOK-AI/main/screenshot.png)  
